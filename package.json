@@ -1,0 +1,18 @@
+
+{
+  "name": "aerova-weather",
+  "version": "1.0.0",
+  "description": "A simple Node.js CLI weather application.",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [
+    "weather",
+    "cli",
+    "nodejs"
+  ],
+  "author": "Ritha ",
+  "license": "MIT"
+}

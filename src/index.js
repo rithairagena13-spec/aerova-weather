@@ -14,7 +14,6 @@ async function main() {
     );
 
     console.log("\nAEROVA WEATHER REPORT");
-    console.log("----------------------");
     console.log(`City: ${location.name}`);
     console.log(`Country: ${location.country}`);
     console.log(`Temperature: ${weather.current.temperature_2m}°C`);

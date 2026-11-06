@@ -8,11 +8,7 @@
   "scripts": {
     "start": "node src/index.js"
   },
-  "keywords": [
-    "weather",
-    "cli",
-    "nodejs"
-  ],
+  "keywords": ["weather",  "cli",  "nodejs"],
   "author": "Ritha ",
   "license": "MIT"
 }

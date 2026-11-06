@@ -1,4 +1,5 @@
 
+import { addToHistory, getHistory } from "./storage.js";
 import { parseArgs } from "node:util";
 import { getCoordinates, getWeather } from "./weather.js";
 
@@ -9,8 +10,26 @@ async function main() {
     });
 
     const city = positionals.join(" ");
+    if (positionals[0] === "history") {
+  const history = await getHistory();
 
-   
+  if (history.length === 0) {
+    console.log("No search history available.");
+  } else {
+    console.log("\nAEROVA SEARCH HISTORY");
+    console.table(
+      history.map((item, index) => ({
+        No: index + 1,
+        City: item.city,
+        Country: item.country,
+        Temperature: `${item.temperature}°C`,
+        Date: new Date(item.searchedAt).toLocaleString()
+      }))
+    );
+  }
+
+  return;
+}
     if (!city || !city.trim()) {
   console.error("Error: Please provide a city name.");
   console.log("Usage: npm start -- <city>");
@@ -26,14 +45,23 @@ async function main() {
       location.latitude,
       location.longitude
     );
+    await addToHistory({
+  city: location.name,
+  country: location.country,
+  temperature: weather.current.temperature_2m
+});
 
     console.log("\nAEROVA WEATHER REPORT");
-    console.log(`City: ${location.name}`);
-    console.log(`Country: ${location.country}`);
-    console.log(`Temperature: ${weather.current.temperature_2m}°C`);
-    console.log(`Humidity: ${weather.current.relative_humidity_2m}%`);
-    console.log(`Wind Speed: ${weather.current.wind_speed_10m} km/h`);
-  
+
+console.table([
+  { "Weather Detail": "City", Value: location.name },
+  { "Weather Detail": "Country", Value: location.country },
+  { "Weather Detail": "Temperature", Value: `${weather.current.temperature_2m}°C` },
+  { "Weather Detail": "Humidity", Value: `${weather.current.relative_humidity_2m}%` },
+  { "Weather Detail": "Wind Speed", Value: `${weather.current.wind_speed_10m} km/h` }
+]);
+
+console.log("Beyond the Forecast.");
     
   } catch (error) {
     if (error.name === "TimeoutError") {

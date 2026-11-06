@@ -1,5 +1,5 @@
 
-import { addToHistory, getHistory } from "./storage.js";
+import {addToHistory, getHistory, addFavorite, getFavorites} from "./storage.js";
 import { parseArgs } from "node:util";
 import { getCoordinates, getWeather } from "./weather.js";
 
@@ -10,6 +10,37 @@ async function main() {
     });
 
     const city = positionals.join(" ");
+
+    if (positionals[0] === "favorite") {
+  const favoriteCity = positionals.slice(1).join(" ").trim();
+
+  if (!favoriteCity) {
+    console.log("Usage: npm start -- favorite <city>");
+    process.exitCode = 1;
+    return;
+  }
+
+  const favorites = await addFavorite(favoriteCity);
+
+  console.log(`⭐ ${favoriteCity} saved to favorites!`);
+  return;
+}
+
+if (positionals[0] === "favorites") {
+  const favorites = await getFavorites();
+
+  if (favorites.length === 0) {
+    console.log("No favorite cities saved yet.");
+  } else {
+    console.log("\nAEROVA FAVORITE CITIES");
+    console.table(favorites.map((city, index) => ({
+      No: index + 1,
+      City: city
+    })));
+  }
+
+  return;
+}
     if (positionals[0] === "history") {
   const history = await getHistory();
 

@@ -1,5 +1,5 @@
 
-import {addToHistory, getHistory, addFavorite, getFavorites} from "./storage.js";
+import {addToHistory, getHistory, addFavorite, getFavorites, getSettings, saveSettings} from "./storage.js";
 import { parseArgs } from "node:util";
 import { getCoordinates, getWeather } from "./weather.js";
 
@@ -10,6 +10,45 @@ async function main() {
     });
 
     const city = positionals.join(" ");
+    if (positionals[0] === "settings") {
+  const settings = await getSettings();
+
+  console.log("\nAEROVA SETTINGS");
+
+  if (Object.keys(settings).length === 0) {
+    console.log("No settings configured yet.");
+  } else {
+    console.table(
+      Object.entries(settings).map(([key, value]) => ({
+        Setting: key,
+        Value: value
+      }))
+    );
+  }
+
+  return;
+}
+
+if (positionals[0] === "set") {
+  const settingName = positionals[1];
+  const settingValue = positionals.slice(2).join(" ");
+
+  if (!settingName || !settingValue) {
+    console.log("Usage: npm start -- set <setting> <value>");
+    process.exitCode = 1;
+    return;
+  }
+
+  const settings = await getSettings();
+
+  settings[settingName] = settingValue;
+
+  await saveSettings(settings);
+
+  console.log(`Setting "${settingName}" saved successfully!`);
+
+  return;
+}
 
     if (positionals[0] === "favorite") {
   const favoriteCity = positionals.slice(1).join(" ").trim();

@@ -1,4 +1,4 @@
-
+#!/usr/bin/env node
 import {addToHistory, getHistory, addFavorite, getFavorites, getSettings, saveSettings} from "./storage.js";
 import { parseArgs } from "node:util";
 import { getCoordinates, getWeather } from "./weather.js";

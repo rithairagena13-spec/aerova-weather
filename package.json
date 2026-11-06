@@ -5,6 +5,9 @@
   "description": "A simple Node.js CLI weather application.",
   "type": "module",
   "main": "src/index.js",
+  "bin": {
+  "aerova": "./src/index.js"
+},
   "scripts": {
     "start": "node src/index.js"
   },

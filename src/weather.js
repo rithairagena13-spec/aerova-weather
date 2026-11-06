@@ -15,3 +15,17 @@ export async function getCoordinates(city) {
 
   return data.results[0];
 }
+
+export async function getWeather(latitude, longitude) {
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m&timezone=auto`;
+
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error("Unable to retrieve weather information.");
+  }
+
+  const data = await response.json();
+
+  return data;
+}

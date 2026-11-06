@@ -126,7 +126,9 @@ console.table([
   { "Weather Detail": "Country", Value: location.country },
   { "Weather Detail": "Temperature", Value: `${weather.current.temperature_2m}°C` },
   { "Weather Detail": "Humidity", Value: `${weather.current.relative_humidity_2m}%` },
-  { "Weather Detail": "Wind Speed", Value: `${weather.current.wind_speed_10m} km/h` }
+  { "Weather Detail": "Precipitation", Value: `${weather.current.precipitation} mm` },
+  { "Weather Detail": "Wind Speed", Value: `${weather.current.wind_speed_10m} km/h` },
+  { "Weather Detail": "Wind Direction", Value: `${weather.current.wind_direction_10m}°` }
 ]);
 
 console.log("Beyond the Forecast.");

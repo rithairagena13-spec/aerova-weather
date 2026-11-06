@@ -10,11 +10,13 @@ async function main() {
 
     const city = positionals.join(" ");
 
-    if (!city) {
-      console.log("Usage: npm start -- <city>");
-      process.exitCode = 1;
-      return;
-    }
+   
+    if (!city || !city.trim()) {
+  console.error("Error: Please provide a city name.");
+  console.log("Usage: npm start -- <city>");
+  process.exitCode = 1;
+  return;
+}
 
     console.log(`Getting weather for ${city}...`);
 

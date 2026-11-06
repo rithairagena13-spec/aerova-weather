@@ -31,8 +31,17 @@ async function main() {
     console.log(`Temperature: ${weather.current.temperature_2m}°C`);
     console.log(`Humidity: ${weather.current.relative_humidity_2m}%`);
     console.log(`Wind Speed: ${weather.current.wind_speed_10m} km/h`);
+  
+    
   } catch (error) {
-    console.error(`Error: ${error.message}`);
+    if (error.name === "TimeoutError") {
+      console.error("Error: The request took too long. Please try again.");
+    } else if (error instanceof TypeError) {
+      console.error("Error: Unable to connect to the internet. Please check your connection and try again.");
+    } else {
+      console.error(`Error: ${error.message}`);
+    }
+
     process.exitCode = 1;
   }
 }

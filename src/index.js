@@ -9,12 +9,10 @@ async function main() {
       allowPositionals: true
     });
 
-    const city = positionals.join(" ");
+    const city = positionals.join(" ") || process.env.AEROVA_DEFAULT_CITY;
     if (positionals[0] === "settings") {
   const settings = await getSettings();
-
   console.log("\nAEROVA SETTINGS");
-
   if (Object.keys(settings).length === 0) {
     console.log("No settings configured yet.");
   } else {

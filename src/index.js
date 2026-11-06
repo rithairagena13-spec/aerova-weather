@@ -1,8 +1,20 @@
+
+import { parseArgs } from "node:util";
 import { getCoordinates, getWeather } from "./weather.js";
 
 async function main() {
   try {
-    const city = "Kigali";
+    const { positionals } = parseArgs({
+      allowPositionals: true
+    });
+
+    const city = positionals.join(" ");
+
+    if (!city) {
+      console.log("Usage: npm start -- <city>");
+      process.exitCode = 1;
+      return;
+    }
 
     console.log(`Getting weather for ${city}...`);
 
